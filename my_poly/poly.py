@@ -2,9 +2,60 @@ import pickle
 import numpy as np
 from typing import Dict, Any, Tuple
 from pathlib import Path
-from read_pkl import analyze_tracks, get_keys_from_pkl
+import sys
+sys.path.append('/home/zhaozishan/')
+from UniTraj.unitraj.my_poly.read_pkl import analyze_tracks, get_keys_from_pkl
+import json
 
-#读取轨迹信息
+import numpy as np
+import json
+import pickle
+from tqdm.auto import tqdm
+from scipy.linalg import block_diag
+
+from av2.datasets.motion_forecasting import scenario_serialization
+from av2.datasets.motion_forecasting.data_schema import ObjectType
+from av2.map.map_api import ArgoverseStaticMap
+
+from utils_common.helper_utils import OBJECT_TYPES, TRACK_CATEGORIES
+import utils_argo2.tracking_utils as tracking_utils 
+import utils_argo2.map_utils as map_utils 
+
+sys.path.append('/home/zhaozishan/everything-polynomial/cmotap/continental-multi-object-tracker-and-predictor/')
+from src.cmotap.trajectory import Trajectory 
+from src.cmotap.basisfunctions.bernsteinpolynomials import BernsteinPolynomials
+from src.cmotap.motionmodels.trajectory_motion import TrajectoryMotion
+from src.cmotap.observationmodels.trajectory_observation import TrajectoryObservation
+
+from src.cmotap import utils
+# 加载先验数据
+with open('/home/zhaozishan/everything-polynomial/Argo2/priors_argo2/vehicle/vehicle_5s_new.json', "r") as read_file:
+    prior_vehicle = json.load(read_file)
+
+with open('/home/zhaozishan/everything-polynomial/Argo2/priors_argo2/cyclist/cyclist_5s_new.json', "r") as read_file:
+    prior_cyclist = json.load(read_file)
+
+with open('/home/zhaozishan/everything-polynomial/Argo2/priors_argo2/pedestrian/pedestrian_5s_new.json', "r") as read_file:
+    prior_pedestrian = json.load(read_file)
+
+with open('/home/zhaozishan/everything-polynomial/Argo2/priors_argo2/ego/ego_5s.json', "r") as read_file:
+    prior_ego = json.load(read_file)
+
+HIST_TIMESCALE = 4.9  # 历史时间尺度
+HIST_DEGREE = 5  # According to AIC in https://arxiv.org/abs/2211.01696v4
+PATH_DEGREE = 3  # 道路段和人行道的度数
+SPACEDIM = 2
+HIST_LEN = 50
+MIN_OBS_LEN = 1
+
+BASIS = BernsteinPolynomials(HIST_DEGREE) #[6,6]
+TRAJ = Trajectory(basisfunctions=BASIS, spacedim=SPACEDIM, timescale=HIST_TIMESCALE)
+                    
+outlier_lane_dict = {}
+
+
+
+#读取scenorinet_pkl转化的轨迹信息
 def analyze_poly_tracks(file_path: str) -> None:
     """
     分析Polynomial数据集中的轨迹信息
@@ -92,11 +143,11 @@ def analyze_poly_tracks(file_path: str) -> None:
         
     except Exception as e:
         print(f"分析文件时发生错误: {str(e)}")
-#将数据储存为新的pkl文件
+#将数据储存为新的mypoly_pkl文件
 def save_data_to_pkl(data, file_path):
     with open(file_path, 'wb') as f:
         pickle.dump(data, f)
-#将轨迹转化为五次多项式，替换原始轨迹存于数组之中
+#将mypoly_pkl轨迹转化为五次多项式，替换原始轨迹存于数组之中
 def convert_to_polynomial(trajectory):
     """
     将轨迹转化为五次多项式

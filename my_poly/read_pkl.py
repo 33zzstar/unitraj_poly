@@ -224,7 +224,7 @@ def main():
     主函数
     """
     # 可以处理单个文件或整个目录
-    path = '/data1/data_zzs/dataset_unitraj_split/AG2_train/AG2_train_0_tmp/sd_av2_v2_00a0adb0-6c55-4df6-88cd-6a524f4edb39.pkl'
+    path = '/data1/data_zzs/dataset_unitraj_split/AG2_train/AG2_train_0_tmp/sd_av2_v2_00a0a3e0-1508-45f2-9cf5-e427e1446a33.pkl'
     # path = "/data1/data_zzs/everything-polynomial_data/train_A2_processed/00a0adb0-6c55-4df6-88cd-6a524f4edb39/00a0adb0-6c55-4df6-88cd-6a524f4edb39_track_infos.pkl"
     if os.path.isdir(path):
         process_directory(path)
