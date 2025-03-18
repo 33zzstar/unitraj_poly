@@ -334,7 +334,8 @@ class BaseModel(pl.LightningModule):
         # #zzs
         # if self.local_rank == 0 and status == 'val':
         # # if self.local_rank == 0 and status == 'val' and batch_idx == 0:
-        #     img = visualization.visualize_prediction(batch, prediction)
+        #   img,gt_his_traj,gt_fut_traj,gt_his_ctrl,gt_fut_ctrl = visualization.visualize_prediction(batch, prediction)
+            # wandb.log({"prediction": [wandb.Image(img)]})
         #     wandb.log({"prediction": [wandb.Image(img)]})
         #     # 显示图像
 
