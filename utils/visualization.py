@@ -2,8 +2,16 @@ import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
+import os ,sys
+parentdir = '/home/zzs/zzs/UniTraj/unitraj/'
 
-
+sys.path.insert(0,parentdir) 
+from Bernstein import (
+    bernstein_poly,
+    bernstein_curve,
+    fit_bernstein_curve,
+    apply_kalman_filter
+)
 # input
 # ego: (16,3)
 # agents: (16,n,3)
@@ -117,7 +125,7 @@ def visualize_batch_data(ax, data):
 
                 # 添加矩形到现有ax中
                 ax.add_patch(rect)
-    def draw_trajectory(trajectory, line_width, ego=False):
+    def draw_trajectory(trajectory, line_width, color=None, ego=False):
         def interpolate_color(start_color, end_color, t, total_t):
             """根据 t 和 total_t 插值计算颜色."""
             return [(1 - t / total_t) * start + (t / total_t) * end for start, end in zip(start_color, end_color)]
@@ -126,20 +134,18 @@ def visualize_batch_data(ax, data):
             ax.plot([point1[0], point2[0]], [point1[1], point2[1]], linewidth=line_width, color=color,alpha=0.5)
         total_t = len(trajectory)
         for t in range(total_t - 1):
-            if ego:
-                # 天蓝色渐变：从深蓝到浅蓝
-                start_color = (0, 0, 0.5)  # 深蓝色
-                end_color = (0.53, 0.81, 0.98)  # 浅蓝色
+            if color is not None:
+                # 使用指定颜色
+                if trajectory[t, 0] and trajectory[t + 1, 0]:
+                    draw_line_with_mask(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
             else:
-                # 草绿色渐变：从深绿到浅绿
-                start_color = (0, 0.5, 0)  # 深绿色
-                end_color = (0.56, 0.93, 0.56)  # 浅绿色
-
-            # 计算当前时间步的颜色
-            color = interpolate_color(start_color, end_color, t, total_t)
-
-            if trajectory[t, 0] and trajectory[t + 1, 0]:
-                draw_line_with_mask(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
+                # 使用默认渐变色方案
+                if ego:
+                    color = interpolate_color_ego(t, total_t)
+                else:
+                    color = interpolate_color(t, total_t)
+                if trajectory[t, 0] and trajectory[t + 1, 0]:
+                    draw_line_with_mask(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
 
     obj_trajs = data['obj_trajs']
     map = data['map_polylines']
@@ -188,7 +194,7 @@ def visualize_batch_data(ax, data):
     ax.set_ylim(-vis_range, vis_range)
     #plt.show()
     return ax
-#将多个图像按指定的行数和列数进行拼接。该函数适用于将一组图像排列成网格，并生成一个包含所有图像的大图像。
+
 def concatenate_images(images, rows, cols):
     # Determine individual image size
     width, height = images[0].size
@@ -206,7 +212,7 @@ def concatenate_images(images, rows, cols):
 
     return new_im
 
-#将一组图像按照指定的列数进行拼接。每列中的图像会按比例缩放以保持纵横比一致，最终将各列的图像横向拼接成一个最终的图像。这种方法非常适用于在不同列数和图像数量下，生成一个组合图像的需求。
+
 def concatenate_varying(image_list, column_counts):
     if not image_list or not column_counts:
         return None
@@ -255,119 +261,141 @@ def concatenate_varying(image_list, column_counts):
 
     return final_image
 
+"""可视化预测结果包括历史轨迹、实际未来轨迹和预测的多个可能轨迹"""
 def visualize_prediction(batch, prediction, draw_index=0):
-    # 在两个点之间绘制一条线，线条颜色和宽度可以指定。
-    def draw_line_with_mask(point1, point2, color, line_width=4):
-        ax.plot([point1[0], point2[0]], [point1[1], point2[1]], linewidth=line_width, color=color)
+        
+    def draw_line_with_mask(point1, point2, color, line_width=1.5,label=None):
+        """绘制带掩码的线段"""
+        ax.plot([point1[0], point2[0]], [point1[1], point2[1]], linewidth=line_width, color=color,label=label)
 
-    # 添加过渡的颜色：根据时间步 t 和总时间步 total_t，插值计算颜色。从绿色（开始）到蓝色（结束）。
+    def draw_line_with_point(point1, point2, color, line_width=0.5,label=None):
+        """绘制带掩码的线段和点标记"""
+        # 绘制线段
+        ax.plot([point1[0], point2[0]], [point1[1], point2[1]], 
+                linewidth=line_width, zorder=4,
+                color=color, label=label)
+        
+        # 绘制端点圆圈
+        ax.plot(point1[0], point1[1], 
+                'o',                    # 'o' 表示圆形标记
+                color=color,            # 圆点颜色
+                zorder=4,
+                markersize=0.2,          # 圆点大小
+                markerfacecolor=color,  # 圆点填充颜色
+                markeredgecolor=color)  # 圆点边框颜色
+        
+        ax.plot(point2[0], point2[1], 
+                'o', 
+                color=color, 
+                zorder=4,
+                markersize=0.2,
+                markerfacecolor=color,
+                markeredgecolor=color)
+
     def interpolate_color(t, total_t):
-        return (0, 1 - t / total_t, t / total_t)
+        """非自车轨迹的颜色插值(浅绿到深绿)"""
+        start_color = (0.56, 0.93, 0.56)  # 浅绿色
+        end_color = (0, 0.5, 0)  # 深绿色
+        return tuple((1 - t/total_t) * s + (t/total_t) * e 
+                    for s, e in zip(start_color, end_color))
 
-    # 为自车添加过渡颜色：红——蓝
     def interpolate_color_ego(t, total_t):
+        # Start is red, end is blue """自车轨迹的颜色插值(红到蓝)"""
         return (1 - t / total_t, 0, t / total_t)
 
-    # 绘制目标的轨迹
-    def draw_trajectory(trajectory, line_width, ego=False):
+    def draw_trajectory(trajectory, line_width, color=None, ego=False):
+        """
+        绘制轨迹
+        Args:
+            trajectory: 轨迹点
+            line_width: 线宽
+            color: 指定颜色（如果为None则使用默认渐变色）
+            ego: 是否为自车
+        """
         total_t = len(trajectory)
         for t in range(total_t - 1):
             if ego:
-                color = interpolate_color_ego(t, total_t)
+                # 自车使用点+线的表示方式
                 if trajectory[t, 0] and trajectory[t + 1, 0]:
-                    draw_line_with_mask(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
+                    draw_line_with_point(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
             else:
-                color = interpolate_color(t, total_t)
-                if trajectory[t, 0] and trajectory[t + 1, 0]:
-                    draw_line_with_mask(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
+                # 非自车使用渐变色
+                if color is not None:
+                    # 使用指定颜色
+                    if trajectory[t, 0] and trajectory[t + 1, 0]:
+                        draw_line_with_mask(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
+                else:
+                    # 使用渐变色
+                    current_color = interpolate_color(t, total_t)
+                    if trajectory[t, 0] and trajectory[t + 1, 0]:
+                        draw_line_with_mask(trajectory[t], trajectory[t + 1], color=current_color, line_width=line_width)
 
-    batch = batch['input_dict']
-    map_lanes = batch['map_polylines'][draw_index].cpu().numpy()
-    map_mask = batch['map_polylines_mask'][draw_index].cpu().numpy()
-    past_traj = batch['obj_trajs'][draw_index].cpu().numpy()
-    future_traj = batch['obj_trajs_future_state'][draw_index].cpu().numpy()
-    pred_future_prob = prediction['predicted_probability'][draw_index].detach().cpu().numpy()
-    pred_future_traj = prediction['predicted_trajectory'][draw_index].detach().cpu().numpy()
+        # 添加控制点相关函数
+    def fit_trajectory_to_control_points(trajectory):
+        """将轨迹转换为控制点并生成拟合曲线"""
+        # 过滤掉无效点
+        valid_points = trajectory[trajectory[:, 0] != 0]
+        if len(valid_points) < 2:  # 确保有足够的点
+            return None, None
+            
+        # 应用卡尔曼滤波
+        filtered_trajectory = apply_kalman_filter(valid_points)
+        
+        # 拟合控制点
+        degree = 5  # 控制点数量
+        control_points = fit_bernstein_curve(filtered_trajectory, degree)
+        
+        # 生成拟合曲线点
+        t = np.linspace(0, 1, 100)
+        fitted_curve = np.array([bernstein_curve(control_points, ti) for ti in t])
+        
+        return control_points, fitted_curve
+    
 
-    # 选择自车轨迹
-    ego_index = batch['track_index_to_predict'][draw_index]
-    ego_trajectory = past_traj[ego_index]
-
-    # 计算自车轨迹的中心
-    ego_center = np.mean(ego_trajectory[:, :2], axis=0)
-
-    # 计算自车轨迹的最小边界框
-    ego_x_min, ego_y_min = np.min(ego_trajectory[:, :2], axis=0)
-    ego_x_max, ego_y_max = np.max(ego_trajectory[:, :2], axis=0)
-    buffer = 10  # 设置显示区域的缓冲区，避免显示过紧凑
-    x_min = ego_x_min - buffer
-    x_max = ego_x_max + buffer
-    y_min = ego_y_min - buffer
-    y_max = ego_y_max + buffer
-
-    # 创建图形
-    fig, ax = plt.subplots()
-    ax.set_aspect('equal')
-
-    # 设置坐标轴范围，确保自车轨迹居中
-    ax.set_xlim(x_min, x_max)
-    ax.set_ylim(y_min, y_max)
-
-    # 绘制地图
-    map_xy = map_lanes[..., :2]  # 提取地图坐标
-    map_type = map_lanes[..., 0, -20:]
-
-    for idx, lane in enumerate(map_xy):
-        lane_type = map_type[idx]
-        lane_type = np.argmax(lane_type)
-        if lane_type in [1, 2, 3]:
-            continue
-        for i in range(len(lane) - 1):
-            if map_mask[idx, i] and map_mask[idx, i + 1]:
-                draw_line_with_mask(lane[i], lane[i + 1], color='grey', line_width=1.5)
-
-    # 绘制自车的历史轨迹
-    for idx, traj in enumerate(past_traj):
-        draw_trajectory(traj, line_width=2, ego=True)
-
-    # 绘制自车的未来轨迹
-    for idx, traj in enumerate(future_traj):
-        draw_trajectory(traj, line_width=2, ego=False)
-
-    # 绘制预测的未来轨迹
-    for idx, traj in enumerate(pred_future_traj):
-        color = cm.hot(pred_future_prob[idx])
-        for i in range(len(traj) - 1):
-            draw_line_with_mask(traj[i], traj[i + 1], color=color, line_width=2)
-
-    return plt
-
-def visualize_prediction_old(batch, prediction, draw_index=0):
-    #在两个点之间绘制一条线，线条颜色和宽度可以指定。
-    def draw_line_with_mask(point1, point2, color, line_width=4):
-        ax.plot([point1[0], point2[0]], [point1[1], point2[1]], linewidth=line_width, color=color)
-    #添加过渡的颜色：根据时间步 t 和总时间步 total_t，插值计算颜色。从绿色（开始）到蓝色（结束）。
-    def interpolate_color(t, total_t):
-        # Start is green, end is blue
-        return (0, 1 - t / total_t, t / total_t)
-    #为自车添加过渡颜色：红——蓝
-    def interpolate_color_ego(t, total_t):
-        # Start is red, end is blue
-        return (1 - t / total_t, 0, t / total_t)
-    #绘制目标的轨迹。轨迹中的每段线条根据时间步 t 被赋予不同的颜色。若 ego=True，则使用 interpolate_color_ego 计算颜色。
-
-    def draw_trajectory(trajectory, line_width, ego=False):
-        total_t = len(trajectory)
-        for t in range(total_t - 1):
-            if ego:
-                color = interpolate_color_ego(t, total_t)
-                if trajectory[t, 0] and trajectory[t + 1, 0]:
-                    draw_line_with_mask(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
-            else:
-                color = interpolate_color(t, total_t)
-                if trajectory[t, 0] and trajectory[t + 1, 0]:
-                    draw_line_with_mask(trajectory[t], trajectory[t + 1], color=color, line_width=line_width)
-
+    def calculate_view_range():
+        """计算合适的视野范围，以自车轨迹为重点"""
+        # 收集自车所有相关轨迹点
+        ego_points = []
+        
+        # 添加历史轨迹点
+        ego_hist_traj = past_traj[ego_index, :, :2]
+        ego_points.extend(ego_hist_traj[ego_hist_traj[:, 0] != 0])
+        
+        # 添加真实未来轨迹点
+        ego_future_traj = future_traj[ego_index, :, :2]
+        ego_points.extend(ego_future_traj[ego_future_traj[:, 0] != 0])
+        
+        # 添加预测轨迹点
+        pred_points = pred_future_traj[max_prob_idx, :, :2]
+        ego_points.extend(pred_points[pred_points[:, 0] != 0])
+        
+        # 转换为numpy数组
+        ego_points = np.array(ego_points)
+        
+        # 计算自车轨迹的范围
+        max_x = np.max(ego_points[:, 0])
+        min_x = np.min(ego_points[:, 0])
+        max_y = np.max(ego_points[:, 1])
+        min_y = np.min(ego_points[:, 1])
+        
+        # 计算中心点（使用自车当前位置）
+        center_x = ego_last_pos[0]
+        center_y = ego_last_pos[1]
+        
+        # 计算需要的视野范围（考虑边距）
+        margin = 15  # 减小边距到15米
+        range_x = max(abs(max_x - center_x), abs(min_x - center_x)) + margin
+        range_y = max(abs(max_y - center_y), abs(min_y - center_y)) + margin
+        
+        # 取较大的范围确保视野是正方形，但设置上限
+        view_range = min(max(range_x, range_y), 20)  # 限制最大视野范围为35米
+        
+        return center_x, center_y, view_range
+    
+    
+    
+    
+    # 提取数据
     batch = batch['input_dict']
     map_lanes = batch['map_polylines'][draw_index].cpu().numpy()
     map_mask = batch['map_polylines_mask'][draw_index].cpu().numpy()
@@ -377,16 +405,26 @@ def visualize_prediction_old(batch, prediction, draw_index=0):
     future_traj_mask = batch['obj_trajs_future_mask'][draw_index].cpu().numpy()
     pred_future_prob = prediction['predicted_probability'][draw_index].detach().cpu().numpy()
     pred_future_traj = prediction['predicted_trajectory'][draw_index].detach().cpu().numpy()
-
+    ego_index = batch['track_index_to_predict'][draw_index].item()  # 获取自车索引
+    ego_last_pos = pred_future_traj[0, 1, :2]  # 获取最后一帧位置
     map_xy = map_lanes[..., :2]
+    ego_history_traj = None
+    ego_future_traj = None
+    # 添加控制点提取代码
+    history_control_points = batch['history_control_points'][draw_index].cpu().numpy() 
+    future_control_points = batch['future_control_points'][draw_index].cpu().numpy()
+
+
 
     map_type = map_lanes[..., 0, -20:]
 
     # draw map
     fig, ax = plt.subplots()
     ax.set_aspect('equal')
+    first_map_element = True  # 添加标志变量
     # Plot the map with mask check
     for idx, lane in enumerate(map_xy):
+
         lane_type = map_type[idx]
         # convert onehot to index
         lane_type = np.argmax(lane_type)
@@ -394,21 +432,130 @@ def visualize_prediction_old(batch, prediction, draw_index=0):
             continue
         for i in range(len(lane) - 1):
             if map_mask[idx, i] and map_mask[idx, i + 1]:
-                draw_line_with_mask(lane[i], lane[i + 1], color='grey', line_width=1.5)
+                if first_map_element:  # 只有第一次绘制时添加图例
+                    draw_line_with_mask(lane[i], lane[i + 1], 
+                                    color='grey', 
+                                    line_width=1.5,
+                                    label='Map Elements')
+                    first_map_element = False  # 设置标志为False，之后不再添加图例
+                else:
+                    draw_line_with_mask(lane[i], lane[i + 1], 
+                                    color='grey', 
+                                    line_width=1.5)
+    # 绘制历史轨迹
+    for idx, traj in enumerate(past_traj[:,:,:2]):
+        if idx == ego_index:
+            ego_history_traj = traj
+            # 自车历史轨迹用黑色，使用点表示
+            history_GT_control_points, fitted_curve = fit_trajectory_to_control_points(ego_history_traj)
+            if history_GT_control_points is not None:
+                # 绘制控制点
+                ax.scatter(history_GT_control_points[:, 0], history_GT_control_points[:, 1], 
+                color='red', marker='^', s=0.3, zorder=5,
+                label='Historical Control Points')
+                          
+                # 绘制拟合曲线
+                ax.plot(fitted_curve[:, 0], fitted_curve[:, 1],
+                    color='red', linewidth=0.5, zorder=5,
+                    label='Historical Fitted Trajectory')
+            draw_trajectory(traj, line_width=0.5, color='black', ego=True)
+        elif idx == 0:  # 只在第一个其他车辆添加图例
+            draw_trajectory(traj, line_width=2, color=None, ego=False,
+                          label='Other Vehicles')
+        else:
+            # 其他车辆使用默认渐变色
+            draw_trajectory(traj, line_width=2, color=None, ego=False)
 
-    # draw past trajectory
-    for idx, traj in enumerate(past_traj):
-        draw_trajectory(traj, line_width=2)
+    # 绘制实际未来轨迹
+    for idx, traj in enumerate(future_traj[:,:,:2]):
+        if idx == ego_index:
+            ego_future_traj = traj
+            # 对未来轨迹进行控制点拟合
+            future_GT_control_points, fitted_curve_future = fit_trajectory_to_control_points(ego_future_traj)
+            
+            if future_GT_control_points is not None and fitted_curve_future is not None:
+                # 绘制未来轨迹的控制点 - 使用黑色
+                ax.scatter(future_GT_control_points[:, 0], future_GT_control_points[:, 1], 
+                         color='gray', marker='^', s=0.3, zorder=5,
+                         label='Future Control Points')
+                
+                # 绘制未来轨迹的拟合曲线 - 使用黑色
+                ax.plot(fitted_curve_future[:, 0], fitted_curve_future[:, 1],
+                       color='gray', linewidth=0.2, zorder=6,
+                       label='Future Fitted Trajectory')
+                
+            # 自车未来真值轨迹用黑色，使用点表示
+            draw_trajectory(traj, line_width=0.5, color='black', ego=True)
+        else:
+            # 其他车辆使用默认渐变色
+            draw_trajectory(traj, line_width=2, color=None, ego=False)
 
-    # draw future trajectory
-    for idx, traj in enumerate(future_traj):
-        draw_trajectory(traj, line_width=2)
+   
+    
+    
+    # 找出概率最高的轨迹索引
+    max_prob_idx = np.argmax(pred_future_prob)
 
-    # predicted future trajectory is (n,future_len,2) with n possible future trajectories, visualize all of them
-    for idx, traj in enumerate(pred_future_traj):
-        # calculate color based on probability
-        color = cm.hot(pred_future_prob[idx])
-        for i in range(len(traj) - 1):
-            draw_line_with_mask(traj[i], traj[i + 1], color=color, line_width=2)
+    pred_traj = pred_future_traj[max_prob_idx]
+    # 只绘制概率最高的轨迹
+    # 使用黄色绘制预测轨迹
+    for i in range(len(pred_traj) - 1):
+        if i == 0:  # 只在第一段添加图例
+            draw_line_with_point(pred_traj[i], pred_traj[i + 1], 
+                                color='yellow', line_width=0.5,
+                                label='Predicted Trajectory')
+        else:
+            draw_line_with_point(pred_traj[i], pred_traj[i + 1], 
+                            color='yellow', line_width=0.5,
+                      )
 
-    return plt
+
+    # #绘制所有概率预测轨迹
+    # for idx, traj in enumerate(pred_future_traj):
+    #     # 根据概率值指定颜色
+    #     color = cm.hot(pred_future_prob[idx])
+    #     for i in range(len(traj) - 1):
+    #         draw_line_with_mask(traj[i], traj[i + 1], color=color, line_width=0.5)
+    
+            # 在右上角添加图例
+    ax.legend(loc='upper right', 
+             fontsize=8,
+             bbox_to_anchor=(1.15, 1.0),
+             frameon=True,
+             fancybox=True,
+             shadow=True)
+    
+    # 计算视野范围
+    center_x, center_y, view_range = calculate_view_range()
+    
+    # 设置坐标轴范围，以自车为中心
+    ax.set_xlim(center_x - view_range, center_x + view_range)
+    ax.set_ylim(center_y - view_range, center_y + view_range)
+    
+    # 设置其他属性
+    ax.set_aspect('equal')  # 保持横纵比例相等
+    ax.axis('off')  # 隐藏坐标轴
+    ax.grid(True)  # 显示网格
+
+
+
+
+
+    
+    # 保存路径
+    save_path = "/home/zzs/zzs/UniTraj/plt_sample" 
+    #子目录
+    save_commit = '3.18.1_minitrain'
+    #创建完整目录
+    save_dir = os.path.join(save_path)
+    # timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    # 确保目录存在
+    os.makedirs(save_dir, exist_ok=True)
+    # 生成文件名和完整的保存路径
+    filename = f'trajectory_plot_{save_commit}.png'
+    save_path = os.path.join(save_dir, filename)
+
+    plt.savefig(save_path, dpi=500, bbox_inches='tight')
+    # 清理图像以释放内存
+    # plt.close()
+    return plt,ego_history_traj,ego_future_traj,history_GT_control_points ,future_GT_control_points
