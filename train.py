@@ -12,7 +12,7 @@ import hydra
 from omegaconf import OmegaConf
 import os
 import wandb
-
+import datetime
 
 @hydra.main(version_base=None, config_path="configs", config_name="config")
 def train(cfg):
@@ -35,8 +35,8 @@ def train(cfg):
         filename='{epoch}-{val/brier_fde:.2f}',
         save_top_k=1,
         mode='min',  # 'min' for loss/error, 'max' for accuracy
-        dirpath=f'./unitraj_ckpt/{cfg.exp_name}'
-    )
+        dirpath=f"/home/zzs/zzs/unitraj_ckpt/{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}_{cfg.exp_name}_{cfg.dataset}_{cfg.method['model_name']}"
+        )
 
     call_backs.append(checkpoint_callback)
 
@@ -62,8 +62,9 @@ def train(cfg):
     # automatically resume training
     if cfg.ckpt_path is None and not cfg.debug:
         # Pattern to match all .ckpt files in the base_path recursively
-        search_pattern = os.path.join('./unitraj', cfg.exp_name, '**', '*.ckpt')
+        search_pattern = os.path.join('/home/zzs/zzs/UniTraj/unitraj_ckpt', f"{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}_{cfg.exp_name}_{cfg.dataset}_{cfg.method['model_name']}", '**', '*.ckpt')
         cfg.ckpt_path = find_latest_checkpoint(search_pattern)
+
 
     trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader, ckpt_path=cfg.ckpt_path)
 
