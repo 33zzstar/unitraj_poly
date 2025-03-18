@@ -1,0 +1,16 @@
+{"time":"2025-03-18T16:35:58.030483228+08:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-03-18T16:35:58.030493121+08:00","level":"INFO","msg":"created symlink","path":"/home/zzs/zzs/UniTraj/unitraj/wandb/run-20250318_163558-vhaxe069/logs/debug-core.log"}
+{"time":"2025-03-18T16:35:58.13432002+08:00","level":"INFO","msg":"created new stream","id":"vhaxe069"}
+{"time":"2025-03-18T16:35:58.134360231+08:00","level":"INFO","msg":"stream: started","id":"vhaxe069"}
+{"time":"2025-03-18T16:35:58.134375657+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"vhaxe069"}
+{"time":"2025-03-18T16:35:58.1343689+08:00","level":"INFO","msg":"handler: started","stream_id":"vhaxe069"}
+{"time":"2025-03-18T16:35:58.13443033+08:00","level":"INFO","msg":"sender: started","stream_id":"vhaxe069"}
+{"time":"2025-03-18T16:35:58.825712257+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-18T16:38:25.08201626+08:00","level":"INFO","msg":"stream: closing","id":"vhaxe069"}
+{"time":"2025-03-18T16:38:25.082040162+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-18T16:38:25.082434022+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-18T16:38:25.969811426+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-18T16:38:26.766261918+08:00","level":"INFO","msg":"handler: closed","stream_id":"vhaxe069"}
+{"time":"2025-03-18T16:38:26.766290641+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"vhaxe069"}
+{"time":"2025-03-18T16:38:26.766318271+08:00","level":"INFO","msg":"sender: closed","stream_id":"vhaxe069"}
+{"time":"2025-03-18T16:38:26.766330864+08:00","level":"INFO","msg":"stream: closed","id":"vhaxe069"}

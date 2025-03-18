@@ -1,0 +1,1 @@
+{"_runtime":10.782952381,"val/minADE6":1.662773609161377,"val/nuscenes/brier_fde":4.62822151184082,"val/minFDE6":3.8889718055725098,"_timestamp":1.7422872156228235e+09,"_step":3,"_wandb":{"runtime":12},"val/loss":739.8900146484375,"val/miss_rate":0.75,"epoch":39}

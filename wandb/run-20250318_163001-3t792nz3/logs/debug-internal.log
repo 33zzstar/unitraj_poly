@@ -1,0 +1,16 @@
+{"time":"2025-03-18T16:30:01.809929382+08:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-03-18T16:30:01.809940002+08:00","level":"INFO","msg":"created symlink","path":"/home/zzs/zzs/UniTraj/unitraj/wandb/run-20250318_163001-3t792nz3/logs/debug-core.log"}
+{"time":"2025-03-18T16:30:01.912777136+08:00","level":"INFO","msg":"created new stream","id":"3t792nz3"}
+{"time":"2025-03-18T16:30:01.912798231+08:00","level":"INFO","msg":"stream: started","id":"3t792nz3"}
+{"time":"2025-03-18T16:30:01.912809559+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"3t792nz3"}
+{"time":"2025-03-18T16:30:01.912812656+08:00","level":"INFO","msg":"sender: started","stream_id":"3t792nz3"}
+{"time":"2025-03-18T16:30:01.912849482+08:00","level":"INFO","msg":"handler: started","stream_id":"3t792nz3"}
+{"time":"2025-03-18T16:30:02.591159232+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-18T16:30:07.23175892+08:00","level":"INFO","msg":"stream: closing","id":"3t792nz3"}
+{"time":"2025-03-18T16:30:07.231804976+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-18T16:30:07.232574748+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-18T16:30:08.087150125+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-18T16:30:08.781702843+08:00","level":"INFO","msg":"handler: closed","stream_id":"3t792nz3"}
+{"time":"2025-03-18T16:30:08.781720967+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"3t792nz3"}
+{"time":"2025-03-18T16:30:08.78173208+08:00","level":"INFO","msg":"sender: closed","stream_id":"3t792nz3"}
+{"time":"2025-03-18T16:30:08.781768172+08:00","level":"INFO","msg":"stream: closed","id":"3t792nz3"}

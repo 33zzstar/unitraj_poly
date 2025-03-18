@@ -1,0 +1,42 @@
+{
+  "os":  "Linux-6.8.0-52-generic-x86_64-with-glibc2.36",
+  "python":  "CPython 3.9.21",
+  "startedAt":  "2025-03-18T08:40:44.510812Z",
+  "program":  "/home/zzs/zzs/UniTraj/unitraj/train.py",
+  "codePath":  "train.py",
+  "git":  {
+    "remote":  "git@github.com:33zzstar/unitraj_poly.git",
+    "commit":  "8fd9a741b2f01056ed5cc5992a4ea922ab29b1fd"
+  },
+  "email":  "1299113812@qq.com",
+  "root":  "/home/zzs/zzs/UniTraj/unitraj",
+  "host":  "zzs-ubuntu-7C71",
+  "executable":  "/home/zzs/miniconda3/envs/unitraj/bin/python",
+  "codePathLocal":  "train.py",
+  "cpu_count":  10,
+  "cpu_count_logical":  20,
+  "gpu":  "NVIDIA GeForce RTX 4080",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "3936288260096",
+      "used":  "1242842521600"
+    }
+  },
+  "memory":  {
+    "total":  "33567645696"
+  },
+  "cpu":  {
+    "count":  10,
+    "countLogical":  20
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA GeForce RTX 4080",
+      "memoryTotal":  "17171480576",
+      "cudaCores":  9728,
+      "architecture":  "Ada"
+    }
+  ],
+  "cudaVersion":  "12.4"
+}

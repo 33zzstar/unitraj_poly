@@ -1,0 +1,16 @@
+{"time":"2025-03-18T16:40:04.840902287+08:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-03-18T16:40:04.840915578+08:00","level":"INFO","msg":"created symlink","path":"/home/zzs/zzs/UniTraj/unitraj/wandb/run-20250318_164004-airvj3u5/logs/debug-core.log"}
+{"time":"2025-03-18T16:40:04.943501992+08:00","level":"INFO","msg":"created new stream","id":"airvj3u5"}
+{"time":"2025-03-18T16:40:04.943524731+08:00","level":"INFO","msg":"stream: started","id":"airvj3u5"}
+{"time":"2025-03-18T16:40:04.943568947+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"airvj3u5"}
+{"time":"2025-03-18T16:40:04.943574763+08:00","level":"INFO","msg":"sender: started","stream_id":"airvj3u5"}
+{"time":"2025-03-18T16:40:04.94360507+08:00","level":"INFO","msg":"handler: started","stream_id":"airvj3u5"}
+{"time":"2025-03-18T16:40:05.706789794+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-18T16:40:16.888304469+08:00","level":"INFO","msg":"stream: closing","id":"airvj3u5"}
+{"time":"2025-03-18T16:40:16.888324672+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-18T16:40:16.888740788+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-18T16:40:18.127282947+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-18T16:40:18.978932203+08:00","level":"INFO","msg":"handler: closed","stream_id":"airvj3u5"}
+{"time":"2025-03-18T16:40:18.978957659+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"airvj3u5"}
+{"time":"2025-03-18T16:40:18.979021461+08:00","level":"INFO","msg":"sender: closed","stream_id":"airvj3u5"}
+{"time":"2025-03-18T16:40:18.979081634+08:00","level":"INFO","msg":"stream: closed","id":"airvj3u5"}

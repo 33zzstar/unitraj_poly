@@ -1,0 +1,65 @@
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+Seed set to 42
+Loading validation data...
+Warning: cache path /home/zzs/zzs/UniTraj/cache/nuscenes_mini_test_split/dataset_split already exists, skip
+Loaded 61 samples from /home/zzs/zzs/UniTraj/dataset_split/nuscenes_mini_test_split
+Data loaded
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/loggers/wandb.py:397: There is a wandb run already in progress and newly created instances of `WandbLogger` will reuse this run. If this is not desired, call `wandb.finish()` before instantiating `WandbLogger`.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=19` in the `DataLoader` to improve performance.
+Validation DataLoader 0:   0%|                                                                                                                                                                             | 0/16 [00:00<?, ?it/s]
+Error executing job with overrides: []
+Traceback (most recent call last):
+  File "/home/zzs/zzs/UniTraj/unitraj/evaluation.py", line 44, in <module>
+    evaluation()
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+  File "/home/zzs/zzs/UniTraj/unitraj/evaluation.py", line 39, in evaluation
+    trainer.validate(model=model, dataloaders=val_loader, ckpt_path=cfg.ckpt_path)
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 640, in validate
+    return call._call_and_handle_interrupt(
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/call.py", line 47, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 680, in _validate_impl
+    results = self._run(model, ckpt_path=ckpt_path)
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 982, in _run
+    results = self._run_stage()
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 1019, in _run_stage
+    return self._evaluation_loop.run()
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/loops/utilities.py", line 179, in _decorator
+    return loop_run(self, *args, **kwargs)
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/loops/evaluation_loop.py", line 144, in run
+    self._evaluation_step(batch, batch_idx, dataloader_idx, dataloader_iter)
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/loops/evaluation_loop.py", line 433, in _evaluation_step
+    output = call._call_strategy_hook(trainer, hook_name, *step_args)
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/call.py", line 323, in _call_strategy_hook
+    output = fn(*args, **kwargs)
+  File "/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/strategies/strategy.py", line 412, in validation_step
+    return self.lightning_module.validation_step(*args, **kwargs)
+  File "/home/zzs/zzs/UniTraj/unitraj/models/base_model/base_model.py", line 62, in validation_step
+    self.log_info(batch, batch_idx, prediction, status='val')
+  File "/home/zzs/zzs/UniTraj/unitraj/models/base_model/base_model.py", line 337, in log_info
+    img,gt_his_traj,gt_fut_traj,gt_his_ctrl,gt_fut_ctrl = visualization.visualize_prediction(batch, prediction)
+  File "/home/zzs/zzs/UniTraj/unitraj/utils/visualization.py", line 414, in visualize_prediction
+    history_control_points = batch['history_control_points'][draw_index].cpu().numpy()
+KeyError: 'history_control_points'

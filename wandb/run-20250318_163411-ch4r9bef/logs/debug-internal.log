@@ -1,0 +1,16 @@
+{"time":"2025-03-18T16:34:11.258357448+08:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-03-18T16:34:11.258367481+08:00","level":"INFO","msg":"created symlink","path":"/home/zzs/zzs/UniTraj/unitraj/wandb/run-20250318_163411-ch4r9bef/logs/debug-core.log"}
+{"time":"2025-03-18T16:34:11.36214532+08:00","level":"INFO","msg":"created new stream","id":"ch4r9bef"}
+{"time":"2025-03-18T16:34:11.362174551+08:00","level":"INFO","msg":"stream: started","id":"ch4r9bef"}
+{"time":"2025-03-18T16:34:11.362192212+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"ch4r9bef"}
+{"time":"2025-03-18T16:34:11.362205697+08:00","level":"INFO","msg":"handler: started","stream_id":"ch4r9bef"}
+{"time":"2025-03-18T16:34:11.362208988+08:00","level":"INFO","msg":"sender: started","stream_id":"ch4r9bef"}
+{"time":"2025-03-18T16:34:12.054968945+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-18T16:35:22.409104277+08:00","level":"INFO","msg":"stream: closing","id":"ch4r9bef"}
+{"time":"2025-03-18T16:35:22.409123782+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-18T16:35:22.409506135+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-18T16:35:23.277976853+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-18T16:35:23.955006299+08:00","level":"INFO","msg":"handler: closed","stream_id":"ch4r9bef"}
+{"time":"2025-03-18T16:35:23.955035189+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ch4r9bef"}
+{"time":"2025-03-18T16:35:23.95503673+08:00","level":"INFO","msg":"sender: closed","stream_id":"ch4r9bef"}
+{"time":"2025-03-18T16:35:23.95508058+08:00","level":"INFO","msg":"stream: closed","id":"ch4r9bef"}

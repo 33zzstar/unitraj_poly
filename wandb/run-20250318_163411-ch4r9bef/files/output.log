@@ -1,0 +1,16 @@
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+Seed set to 42
+Loading validation data...
+Warning: cache path /home/zzs/zzs/UniTraj/cache/nuscenes_mini_test_split/dataset_split already exists, skip
+Loaded 61 samples from /home/zzs/zzs/UniTraj/dataset_split/nuscenes_mini_test_split
+Data loaded
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/loggers/wandb.py:397: There is a wandb run already in progress and newly created instances of `WandbLogger` will reuse this run. If this is not desired, call `wandb.finish()` before instantiating `WandbLogger`.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=19` in the `DataLoader` to improve performance.
+Validation DataLoader 0:  44%|████████████████████████████████████████████████████████████████████████▏                                                                                            | 7/16 [01:02<01:20,  0.11it/s]
+
+Detected KeyboardInterrupt, attempting graceful shutdown ...

@@ -1,0 +1,16 @@
+{"time":"2025-03-18T16:40:44.512391839+08:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-03-18T16:40:44.51240384+08:00","level":"INFO","msg":"created symlink","path":"/home/zzs/zzs/UniTraj/unitraj/wandb/run-20250318_164044-onc2c02w/logs/debug-core.log"}
+{"time":"2025-03-18T16:40:44.615404585+08:00","level":"INFO","msg":"created new stream","id":"onc2c02w"}
+{"time":"2025-03-18T16:40:44.615428869+08:00","level":"INFO","msg":"stream: started","id":"onc2c02w"}
+{"time":"2025-03-18T16:40:44.61544415+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"onc2c02w"}
+{"time":"2025-03-18T16:40:44.615463464+08:00","level":"INFO","msg":"sender: started","stream_id":"onc2c02w"}
+{"time":"2025-03-18T16:40:44.615475806+08:00","level":"INFO","msg":"handler: started","stream_id":"onc2c02w"}
+{"time":"2025-03-18T16:40:45.243405616+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-18T16:56:22.068981181+08:00","level":"INFO","msg":"stream: closing","id":"onc2c02w"}
+{"time":"2025-03-18T16:56:22.069021843+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-18T16:56:22.069527186+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-18T16:56:23.432757429+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-18T16:56:24.462715868+08:00","level":"INFO","msg":"handler: closed","stream_id":"onc2c02w"}
+{"time":"2025-03-18T16:56:24.462736066+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"onc2c02w"}
+{"time":"2025-03-18T16:56:24.462753579+08:00","level":"INFO","msg":"sender: closed","stream_id":"onc2c02w"}
+{"time":"2025-03-18T16:56:24.462766814+08:00","level":"INFO","msg":"stream: closed","id":"onc2c02w"}

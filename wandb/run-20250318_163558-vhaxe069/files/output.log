@@ -1,0 +1,112 @@
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+Seed set to 42
+Loading validation data...
+Warning: cache path /home/zzs/zzs/UniTraj/cache/nuscenes_mini_test_split/dataset_split already exists, skip
+Loaded 61 samples from /home/zzs/zzs/UniTraj/dataset_split/nuscenes_mini_test_split
+Data loaded
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/loggers/wandb.py:397: There is a wandb run already in progress and newly created instances of `WandbLogger` will reuse this run. If this is not desired, call `wandb.finish()` before instantiating `WandbLogger`.
+Restoring states from the checkpoint path at /home/zzs/zzs/unitraj_ckpt/3.18.1/epoch=39-val/brier_fde=5.23.ckpt
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'val/brier_fde', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}"].
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+Loaded model weights from the checkpoint at /home/zzs/zzs/unitraj_ckpt/3.18.1/epoch=39-val/brier_fde=5.23.ckpt
+/home/zzs/miniconda3/envs/unitraj/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=19` in the `DataLoader` to improve performance.
+Validation DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 16/16 [02:24<00:00,  0.11it/s]
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃[1m [0m[1m           Validate metric            [0m[1m [0m┃[1m [0m[1m             DataLoader 0             [0m[1m [0m┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│[36m [0m[36m  val/agent_types/vehicle_brier_fde   [0m[36m [0m│[35m [0m[35m          5.0996575355529785          [0m[35m [0m│
+│[36m [0m[36m   val/agent_types/vehicle_minADE6    [0m[36m [0m│[35m [0m[35m          1.9858087301254272          [0m[35m [0m│
+│[36m [0m[36m   val/agent_types/vehicle_minFDE6    [0m[36m [0m│[35m [0m[35m          4.320247173309326           [0m[35m [0m│
+│[36m [0m[36m  val/agent_types/vehicle_miss_rate   [0m[36m [0m│[35m [0m[35m          0.6229507923126221          [0m[35m [0m│
+│[36m [0m[36m            val/brier_fde             [0m[36m [0m│[35m [0m[35m          5.0996575355529785          [0m[35m [0m│
+│[36m [0m[36m      val/kalman/easy_brier_fde       [0m[36m [0m│[35m [0m[35m          5.0996575355529785          [0m[35m [0m│
+│[36m [0m[36m       val/kalman/easy_minADE6        [0m[36m [0m│[35m [0m[35m          1.9858087301254272          [0m[35m [0m│
+│[36m [0m[36m       val/kalman/easy_minFDE6        [0m[36m [0m│[35m [0m[35m          4.320247173309326           [0m[35m [0m│
+│[36m [0m[36m      val/kalman/easy_miss_rate       [0m[36m [0m│[35m [0m[35m          0.6229507923126221          [0m[35m [0m│
+│[36m [0m[36m               val/loss               [0m[36m [0m│[35m [0m[35m          857.9381103515625           [0m[35m [0m│
+│[36m [0m[36m             val/minADE6              [0m[36m [0m│[35m [0m[35m          1.9858087301254272          [0m[35m [0m│
+│[36m [0m[36m             val/minFDE6              [0m[36m [0m│[35m [0m[35m          4.320247173309326           [0m[35m [0m│
+│[36m [0m[36m            val/miss_rate             [0m[36m [0m│[35m [0m[35m          0.6229507923126221          [0m[35m [0m│
+│[36m [0m[36m        val/nuscenes/brier_fde        [0m[36m [0m│[35m [0m[35m          5.0996575355529785          [0m[35m [0m│
+│[36m [0m[36m         val/nuscenes/minADE6         [0m[36m [0m│[35m [0m[35m          1.9858087301254272          [0m[35m [0m│
+│[36m [0m[36m         val/nuscenes/minFDE6         [0m[36m [0m│[35m [0m[35m          4.320247173309326           [0m[35m [0m│
+│[36m [0m[36m        val/nuscenes/miss_rate        [0m[36m [0m│[35m [0m[35m          0.6229507923126221          [0m[35m [0m│
+│[36m [0m[36m  val/traj_type/left_turn_brier_fde   [0m[36m [0m│[35m [0m[35m          4.035068988800049           [0m[35m [0m│
+│[36m [0m[36m   val/traj_type/left_turn_minADE6    [0m[36m [0m│[35m [0m[35m          1.7651035785675049          [0m[35m [0m│
+│[36m [0m[36m   val/traj_type/left_turn_minFDE6    [0m[36m [0m│[35m [0m[35m          3.350322723388672           [0m[35m [0m│
+│[36m [0m[36m  val/traj_type/left_turn_miss_rate   [0m[36m [0m│[35m [0m[35m                 0.5                  [0m[35m [0m│
+│[36m [0m[36m  val/traj_type/right_turn_brier_fde  [0m[36m [0m│[35m [0m[35m          5.008719444274902           [0m[35m [0m│
+│[36m [0m[36m   val/traj_type/right_turn_minADE6   [0m[36m [0m│[35m [0m[35m          1.576338768005371           [0m[35m [0m│
+│[36m [0m[36m   val/traj_type/right_turn_minFDE6   [0m[36m [0m│[35m [0m[35m          4.224820613861084           [0m[35m [0m│
+│[36m [0m[36m  val/traj_type/right_turn_miss_rate  [0m[36m [0m│[35m [0m[35m          0.6666666865348816          [0m[35m [0m│
+│[36m [0m[36m  val/traj_type/stationary_brier_fde  [0m[36m [0m│[35m [0m[35m          4.378194332122803           [0m[35m [0m│
+│[36m [0m[36m   val/traj_type/stationary_minADE6   [0m[36m [0m│[35m [0m[35m          1.7482727766036987          [0m[35m [0m│
+│[36m [0m[36m   val/traj_type/stationary_minFDE6   [0m[36m [0m│[35m [0m[35m          3.569098949432373           [0m[35m [0m│
+│[36m [0m[36m  val/traj_type/stationary_miss_rate  [0m[36m [0m│[35m [0m[35m          0.5714285969734192          [0m[35m [0m│
+│[36m [0m[36m   val/traj_type/straight_brier_fde   [0m[36m [0m│[35m [0m[35m           6.78822660446167           [0m[35m [0m│
+│[36m [0m[36m    val/traj_type/straight_minADE6    [0m[36m [0m│[35m [0m[35m          2.8467636108398438          [0m[35m [0m│
+│[36m [0m[36m    val/traj_type/straight_minFDE6    [0m[36m [0m│[35m [0m[35m          5.948059558868408           [0m[35m [0m│
+│[36m [0m[36m   val/traj_type/straight_miss_rate   [0m[36m [0m│[35m [0m[35m          0.7058823704719543          [0m[35m [0m│
+│[36m [0m[36mval/traj_type/straight_right_brier_fde[0m[36m [0m│[35m [0m[35m          1.9384419918060303          [0m[35m [0m│
+│[36m [0m[36m val/traj_type/straight_right_minADE6 [0m[36m [0m│[35m [0m[35m          1.119200348854065           [0m[35m [0m│
+│[36m [0m[36m val/traj_type/straight_right_minFDE6 [0m[36m [0m│[35m [0m[35m          1.450312852859497           [0m[35m [0m│
+│[36m [0m[36mval/traj_type/straight_right_miss_rate[0m[36m [0m│[35m [0m[35m                 0.5                  [0m[35m [0m│
+└────────────────────────────────────────┴────────────────────────────────────────┘
+VALIDATE Profiler Report
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Action                                                                                                                                                         	|  Mean duration (s)	|  Num calls      	|  Total time (s) 	|  Percentage %   	|
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Total                                                                                                                                                          	|  -              	|  256            	|  145.72         	|  100 %          	|
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  [Strategy]SingleDeviceStrategy.validation_step                                                                                                                 	|  9.0067         	|  16             	|  144.11         	|  98.894         	|
+|  [_EvaluationLoop].val_next                                                                                                                                     	|  0.0071367      	|  16             	|  0.11419        	|  0.078362       	|
+|  [Strategy]SingleDeviceStrategy.batch_to_device                                                                                                                 	|  0.0029943      	|  16             	|  0.047908       	|  0.032877       	|
+|  [LightningModule]MotionTransformer.transfer_batch_to_device                                                                                                    	|  0.0029417      	|  16             	|  0.047067       	|  0.0323         	|
+|  [Callback]TQDMProgressBar.on_validation_batch_end                                                                                                              	|  0.00024134     	|  16             	|  0.0038615      	|  0.00265        	|
+|  [LightningModule]MotionTransformer.on_validation_model_eval                                                                                                    	|  0.0028629      	|  1              	|  0.0028629      	|  0.0019647      	|
+|  [Callback]TQDMProgressBar.on_validation_start                                                                                                                  	|  0.0015633      	|  1              	|  0.0015633      	|  0.0010728      	|
+|  [Callback]TQDMProgressBar.on_validation_batch_start                                                                                                            	|  6.6582e-05     	|  16             	|  0.0010653      	|  0.00073108     	|
+|  [Callback]TQDMProgressBar.on_validation_end                                                                                                                    	|  0.00027776     	|  1              	|  0.00027776     	|  0.00019062     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.setup                    	|  0.00014012     	|  1              	|  0.00014012     	|  9.6158e-05     	|
+|  [LightningModule]MotionTransformer.on_validation_epoch_end                                                                                                     	|  6.6167e-05     	|  1              	|  6.6167e-05     	|  4.5408e-05     	|
+|  [Callback]ModelSummary.on_validation_batch_end                                                                                                                 	|  2.9678e-06     	|  16             	|  4.7484e-05     	|  3.2586e-05     	|
+|  [Callback]ModelSummary.on_validation_batch_start                                                                                                               	|  1.8643e-06     	|  16             	|  2.9828e-05     	|  2.047e-05      	|
+|  [LightningModule]MotionTransformer.on_validation_batch_end                                                                                                     	|  1.8181e-06     	|  16             	|  2.909e-05      	|  1.9963e-05     	|
+|  [LightningModule]MotionTransformer.on_before_batch_transfer                                                                                                    	|  1.7525e-06     	|  16             	|  2.804e-05      	|  1.9243e-05     	|
+|  [LightningModule]MotionTransformer.on_after_batch_transfer                                                                                                     	|  1.6101e-06     	|  16             	|  2.5762e-05     	|  1.7679e-05     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.on_validation_batch_start	|  1.4718e-06     	|  16             	|  2.3549e-05     	|  1.6161e-05     	|
+|  [Callback]ModelSummary.on_validation_end                                                                                                                       	|  2.1431e-05     	|  1              	|  2.1431e-05     	|  1.4707e-05     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.on_validation_batch_end  	|  1.321e-06      	|  16             	|  2.1136e-05     	|  1.4505e-05     	|
+|  [LightningModule]MotionTransformer.on_validation_batch_start                                                                                                   	|  1.1382e-06     	|  16             	|  1.8211e-05     	|  1.2497e-05     	|
+|  [Callback]TQDMProgressBar.setup                                                                                                                                	|  1.4532e-05     	|  1              	|  1.4532e-05     	|  9.9727e-06     	|
+|  [Callback]TQDMProgressBar.on_load_checkpoint                                                                                                                   	|  1.3644e-05     	|  1              	|  1.3644e-05     	|  9.3633e-06     	|
+|  [Callback]TQDMProgressBar.teardown                                                                                                                             	|  1.1428e-05     	|  1              	|  1.1428e-05     	|  7.8426e-06     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.on_validation_end        	|  1.0374e-05     	|  1              	|  1.0374e-05     	|  7.1192e-06     	|
+|  [Callback]ModelSummary.on_validation_start                                                                                                                     	|  8.498e-06      	|  1              	|  8.498e-06      	|  5.8318e-06     	|
+|  [LightningModule]MotionTransformer.on_load_checkpoint                                                                                                          	|  8.267e-06      	|  1              	|  8.267e-06      	|  5.6733e-06     	|
+|  [LightningModule]MotionTransformer.on_validation_epoch_start                                                                                                   	|  5.808e-06      	|  1              	|  5.808e-06      	|  3.9858e-06     	|
+|  [Strategy]SingleDeviceStrategy.on_validation_start                                                                                                             	|  2.888e-06      	|  1              	|  2.888e-06      	|  1.9819e-06     	|
+|  [LightningModule]MotionTransformer.configure_callbacks                                                                                                         	|  2.617e-06      	|  1              	|  2.617e-06      	|  1.7959e-06     	|
+|  [Callback]TQDMProgressBar.on_validation_epoch_end                                                                                                              	|  2.436e-06      	|  1              	|  2.436e-06      	|  1.6717e-06     	|
+|  [LightningModule]MotionTransformer.setup                                                                                                                       	|  2.329e-06      	|  1              	|  2.329e-06      	|  1.5983e-06     	|
+|  [Callback]ModelSummary.setup                                                                                                                                   	|  2.135e-06      	|  1              	|  2.135e-06      	|  1.4652e-06     	|
+|  [Callback]ModelSummary.on_load_checkpoint                                                                                                                      	|  2.076e-06      	|  1              	|  2.076e-06      	|  1.4247e-06     	|
+|  [LightningModule]MotionTransformer.teardown                                                                                                                    	|  1.77e-06       	|  1              	|  1.77e-06       	|  1.2147e-06     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.on_validation_start      	|  1.693e-06      	|  1              	|  1.693e-06      	|  1.1618e-06     	|
+|  [Callback]TQDMProgressBar.on_validation_epoch_start                                                                                                            	|  1.614e-06      	|  1              	|  1.614e-06      	|  1.1076e-06     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.on_load_checkpoint       	|  1.421e-06      	|  1              	|  1.421e-06      	|  9.7517e-07     	|
+|  [Callback]ModelSummary.teardown                                                                                                                                	|  1.395e-06      	|  1              	|  1.395e-06      	|  9.5733e-07     	|
+|  [LightningModule]MotionTransformer.on_validation_start                                                                                                         	|  1.245e-06      	|  1              	|  1.245e-06      	|  8.5439e-07     	|
+|  [Callback]ModelSummary.on_validation_epoch_start                                                                                                               	|  1.181e-06      	|  1              	|  1.181e-06      	|  8.1047e-07     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.teardown                 	|  1.096e-06      	|  1              	|  1.096e-06      	|  7.5214e-07     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.on_validation_epoch_start	|  1.032e-06      	|  1              	|  1.032e-06      	|  7.0822e-07     	|
+|  [Callback]ModelSummary.on_validation_epoch_end                                                                                                                 	|  1.028e-06      	|  1              	|  1.028e-06      	|  7.0547e-07     	|
+|  [LightningModule]MotionTransformer.on_validation_end                                                                                                           	|  9.81e-07       	|  1              	|  9.81e-07       	|  6.7322e-07     	|
+|  [Callback]ModelCheckpoint{'monitor': None, 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}.on_validation_epoch_end  	|  9.48e-07       	|  1              	|  9.48e-07       	|  6.5057e-07     	|
+|  [Strategy]SingleDeviceStrategy.on_validation_end                                                                                                               	|  8.69e-07       	|  1              	|  8.69e-07       	|  5.9636e-07     	|
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
